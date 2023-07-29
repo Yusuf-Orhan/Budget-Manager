@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.yusuforhan.budgetmanager.android.Model.BudgetModel
 
-@Database([BudgetModel::class], version = 2)
+@Database([BudgetModel::class], version = 3)
 abstract class BudgetDataBase : RoomDatabase(){
     abstract fun budgetDao() : BudgetDao
 
