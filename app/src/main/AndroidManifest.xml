@@ -15,6 +15,9 @@
         android:theme="@style/Theme.BudgetManager"
         tools:targetApi="31">
         <activity
+            android:name=".onboarding.ui.OnBoarding"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.App.Starting">

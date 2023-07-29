@@ -23,7 +23,7 @@ import com.yusuforhan.budgetmanager.android.ViewModel.MainViewModel
 import com.yusuforhan.budgetmanager.android.ViewModel.MainViewModelFactory
 import com.yusuforhan.budgetmanager.android.databinding.ActivityMainBinding
 import com.yusuforhan.budgetmanager.android.databinding.CustomAlertdialogBinding
-import com.yusuforhan.budgetmanager.android.onboarding.AboutActivity
+import com.yusuforhan.budgetmanager.android.onboarding.ui.OnBoarding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.about_us -> {
-                    startActivity(Intent(this,AboutActivity::class.java))
+                    startActivity(Intent(this,OnBoarding::class.java))
                     true
                 }
                 else ->false
