@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.yusuforhan.budgetmanager.android.ui.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.yusuforhan.budgetmanager.android.ui.DashboardFragment"
+        android:label="DashboardFragment" >
+        <action
+            android:id="@+id/currencyFragment"
+            app:destination="@id/currencyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/currencyFragment"
+        android:name="com.yusuforhan.budgetmanager.android.ui.CurrencyFragment"
+        android:label="CurrencyFragment" />
+</navigation>

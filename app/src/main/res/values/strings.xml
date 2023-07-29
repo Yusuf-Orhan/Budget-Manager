@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Budget Manager</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="types">
+        <item>Income</item>
+        <item>Expense</item>
+    </string-array>
+    <string name="title_activity_compose">ComposeActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+</resources>
