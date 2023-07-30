@@ -18,6 +18,11 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.patrykandpatrick.vico.core.entry.ChartEntryModel
+import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
+import com.patrykandpatrick.vico.core.entry.FloatEntry
+import com.patrykandpatrick.vico.core.entry.entryModelOf
+import com.patrykandpatrick.vico.core.extension.setFieldValue
 import com.yusuforhan.budgetmanager.android.R
 import com.yusuforhan.budgetmanager.android.ViewModel.DashBoardViewModel
 import com.yusuforhan.budgetmanager.android.ViewModel.HomeViewModel
@@ -43,11 +48,7 @@ class DashboardFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false)
         return binding.root
     }
@@ -57,6 +58,8 @@ class DashboardFragment : Fragment() {
         viewModel.getTotalBalance()
         observeLiveData()
         pieChart()
+        val chart_entry_model  = entryModelOf(4f,12f,8f,16f)
+        binding.chartView.setModel(chart_entry_model)
     }
 
     private fun observeLiveData() {
@@ -73,16 +76,6 @@ class DashboardFragment : Fragment() {
             pieList.add(PieEntry(it.toFloat(), "Expense"))
             binding.pieChart.data = pieData
         }
-        /*viewModel.control.observe(viewLifecycleOwner) {
-            if (it) {
-                barChart(viewModel.expenseCategoryMap, viewModel.test())
-            }
-
-
-        }
-
-         */
-
     }
 
     private fun pieChart(incom1e: Float = 100f, expense1: Float = 1000f) {
@@ -107,101 +100,4 @@ class DashboardFragment : Fragment() {
 
     }
 
-    private fun barChart(expenseMap: HashMap<String, Int> = hashMapOf(), incomeMap: HashMap<String, Int>) {
-        val entries = arrayListOf<BarEntry>()
-        val entriesIncome = arrayListOf<BarEntry>()
-        if (!expenseMap.isEmpty()) {
-            if (expenseMap.get("Other") != null) {
-                entries.add(BarEntry(1f, expenseMap.get("Other")?.toFloat()!!))
-            } else {
-                entries.add(BarEntry(1f, 0.1f))
-            }
-            if (expenseMap.get("House Rent") != null) {
-                entries.add(BarEntry(2f, expenseMap.get("House Rent")?.toFloat()!!))
-
-            } else {
-                entries.add(BarEntry(2f, 0.1f))
-            }
-            if (expenseMap.get("Clothes Shopping") != null) {
-                entries.add(BarEntry(3f, expenseMap.get("Clothes Shopping")?.toFloat()!!))
-
-            } else {
-                entries.add(BarEntry(3f, 0.1f))
-            }
-            if (expenseMap.get("Grocery Shopping") != null) {
-                entries.add(BarEntry(4f, expenseMap.get("Grocery Shopping")?.toFloat()!!))
-
-            } else {
-                entries.add(BarEntry(4f, 0.1f))
-            }
-            if (expenseMap.get("Food Shopping") != null) {
-                entries.add(BarEntry(5f, expenseMap.get("Food Shopping")?.toFloat()!!))
-
-            } else {
-                entries.add(BarEntry(5f, 0.1f))
-            }
-        } else {
-            entries.add(BarEntry(1f, 0f))
-            entries.add(BarEntry(2f, 0f))
-            entries.add(BarEntry(3f, 0f))
-            entries.add(BarEntry(4f, 0f))
-            entries.add(BarEntry(5f, 0f))
-        }
-        if (!incomeMap.isEmpty()) {
-            if (incomeMap.get("Wage") != null) {
-                entriesIncome.add(BarEntry(5f, incomeMap.get("Wage")?.toFloat()!!))
-            } else {
-                entriesIncome.add(BarEntry(5f, 0.1f))
-            }
-            if (incomeMap.get("Investment") != null) {
-                entriesIncome.add(BarEntry(4f, incomeMap.get("Investment")?.toFloat()!!))
-            } else {
-                entriesIncome.add(BarEntry( 4f, 0.1f))
-            }
-            if (incomeMap.get("Allowance") != null) {
-                entriesIncome.add(BarEntry(3f, incomeMap.get("Allowance")?.toFloat()!!))
-            } else {
-                entriesIncome.add(BarEntry(3f, 0.1f))
-            }
-            if (incomeMap.get("Freelancer") != null) {
-                entriesIncome.add(BarEntry(2f, incomeMap.get("Freelancer")?.toFloat()!!))
-            } else {
-                entriesIncome.add(BarEntry(2f, 0.1f))
-            }
-            if (incomeMap.get("Other") != null) {
-                entriesIncome.add(BarEntry(1f, incomeMap.get("Other")?.toFloat()!!))
-            } else {
-                entriesIncome.add(BarEntry(1f, 0.1f))
-
-            }
-            val incomeBarDataSet = BarDataSet(entriesIncome, "")
-            // Çubuk grafiği veri setini oluşturma ve özelleştirme
-            val expenseBarDataSet = BarDataSet(entries, "")
-            val colors = listOf<Int>(Color.BLACK, Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN)
-            val colorsIncome = listOf<Int>(Color.GREEN,Color.YELLOW,Color.RED,Color.BLUE,Color.BLACK)
-
-            expenseBarDataSet.colors = colors
-            incomeBarDataSet.colors = colorsIncome
-            expenseBarDataSet.setDrawValues(true)
-            incomeBarDataSet.setDrawValues(true)
-
-            // Çubuk grafiği veri nesnesini oluşturma
-            val expenseBarData: BarData = BarData(expenseBarDataSet)
-            val incomeBarData: BarData = BarData(incomeBarDataSet)
-
-
-            // BarChart görünümüne veri atama ve güncelleme
-            /*binding.barChart.description.isEnabled = false
-            binding.barChart.data = expenseBarData
-            binding.barChart.animateY(1400, Easing.EaseInOutQuad)
-            binding.barChart.invalidate()
-
-            binding.incomeBarCard.description.isEnabled = false
-            binding.incomeBarCard.data = incomeBarData
-            binding.incomeBarCard.animateY(1400, Easing.EaseInOutQuad)
-            binding.incomeBarCard.invalidate()
-
-             */
-        }
-    }
 }

@@ -13,6 +13,11 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenBackground">#FFFFFF</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.BudgetManager</item>
+    </style>
     <style name="BottomAnimation">
         <item name="android:windowEnterAnimation">@anim/bottom_slide_in</item>
         <item name="android:windowExitAnimation">@anim/bottom_slide_out</item>

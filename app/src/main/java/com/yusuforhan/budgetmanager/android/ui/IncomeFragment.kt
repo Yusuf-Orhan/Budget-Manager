@@ -63,7 +63,6 @@ class IncomeFragment : Fragment() ,IncomeListener{
     fun observeLiveData() {
         parentViewModel.listIncome.observe(viewLifecycleOwner) {
             if (it.isEmpty()){
-                Toast.makeText(requireContext(),"Kaydedilmiş Veri Yok",Toast.LENGTH_SHORT).show()
                 binding.blankText.visibility = View.VISIBLE
             }else{
                 binding.blankText.visibility = View.INVISIBLE

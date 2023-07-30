@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             keepSplashOpened
         }
         CoroutineScope(Dispatchers.Main).launch {
-            delay(2000)
+            delay(100)
             keepSplashOpened = false
         }
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.isEmpty.let {
             it.observe(this) {
                 if (it) {
-                    Toast.makeText(this, "Boşlukları Doldurun", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "Fill in the blanks", Toast.LENGTH_SHORT)
                         .show()
                 }
             }

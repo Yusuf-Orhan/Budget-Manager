@@ -33,10 +33,10 @@ class DashBoardViewModel(application: Application,) : BaseViewModel(application)
         var totalIncome : Int = 0
         var totalExpense : Int = 0
         launch{
-            BudgetDataBase(getApplication()).budgetDao().getAllIncome().forEach { budgets ->
+            BudgetDataBase(getApplication()).budgetDao().getAllIncome()?.forEach { budgets ->
                totalIncome += budgets.amount
             }
-            BudgetDataBase(getApplication()).budgetDao().getAllExpense().forEach { budgets ->
+            BudgetDataBase(getApplication()).budgetDao().getAllExpense()?.forEach { budgets ->
                 totalExpense += budgets.amount
             }
             totalIncome1.value = totalIncome

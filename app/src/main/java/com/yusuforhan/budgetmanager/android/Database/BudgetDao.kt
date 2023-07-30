@@ -5,11 +5,13 @@ import com.yusuforhan.budgetmanager.android.Model.BudgetModel
 
 @Dao
 interface BudgetDao {
-    @Query("SELECT * FROM Budgets ")
-    suspend fun getAllBudget() : List<BudgetModel>
-    @Query("SELECT * FROM Budgets WHERE type = 'Income' ")
+   /* @Query("SELECT * FROM Budgets")
+    suspend fun getAllBudget() : List<BudgetModel>?
+
+    */
+    @Query("SELECT * FROM Budgets WHERE type = 'Income'")
     suspend fun getAllIncome() : List<BudgetModel>
-    @Query("SELECT * FROM Budgets WHERE type = 'Expense' ")
+    @Query("SELECT * FROM Budgets WHERE type = 'Expense'")
     suspend fun getAllExpense() : List<BudgetModel>
     @Insert
     suspend fun insert(budgets : BudgetModel)

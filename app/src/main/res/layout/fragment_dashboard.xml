@@ -15,8 +15,8 @@
 
         <ScrollView
             android:id="@+id/scrollView2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -29,19 +29,19 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/pieChartCard"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="250dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
                     app:cardBackgroundColor="#FFFBFF"
                     app:cardCornerRadius="5dp"
-                    app:cardElevation="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="10dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toTopOf="@id/barchartCard"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cardViewMain">
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -50,11 +50,12 @@
                             android:id="@+id/pieChart"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_marginRight="0dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -108,94 +109,35 @@
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
-
-               <!--
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/barChartCard"
-                    android:layout_width="0dp"
-                    android:layout_height="450dp"
+                    android:id="@+id/barchartCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="10dp"
-                    app:cardBackgroundColor="#FFFBFF"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pieChartCard">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/gpTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Monthly Expense Analyse"
-                            android:textColor="@color/black"
-                            android:textSize="22sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <com.github.mikephil.charting.charts.BarChart
-                            android:id="@+id/barChart"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="5dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/gpTextView" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="450dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     app:cardBackgroundColor="#FFFBFF"
                     app:cardCornerRadius="5dp"
-                    app:cardElevation="10dp"
+                    app:cardElevation="5dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/barChartCard">
+                    app:layout_constraintTop_toBottomOf="@id/pieChartCard">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <com.patrykandpatrick.vico.views.chart.ChartView
+                        android:id="@+id/chart_view"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/textView6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Monthly Income Analyse"
-                            android:textColor="@color/black"
-                            android:textSize="22sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <com.github.mikephil.charting.charts.BarChart
-                            android:id="@+id/incomeBarCard"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="10dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/textView6" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_height="match_parent"
+                        app:chart="column"
+                        app:columnChartStyle="@style/Chart2ColumnChartStyle"
+                        app:horizontalLayout="fullWidth"
+                        app:endContentPadding="16dp"
+                        app:startContentPadding="16dp"
+                        app:showBottomAxis="true"
+                        app:showStartAxis="true" />
 
                 </androidx.cardview.widget.CardView>
-                -->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

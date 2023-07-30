@@ -26,7 +26,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun getCategorySize() : HashMap<String,Int>{
         launch {
-            BudgetDataBase(getApplication()).budgetDao().getAllExpense().forEach { budgets ->
+            BudgetDataBase(getApplication()).budgetDao().getAllExpense()?.forEach { budgets ->
                 when (budgets.category) {
                     "Food Shopping" -> {
                         val i: Int = foodShopping.value?.plus(1)!!
