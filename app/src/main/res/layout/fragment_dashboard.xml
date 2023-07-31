@@ -125,6 +125,15 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/pieChartCard">
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Income Analytics"
+                     android:layout_marginTop="5dp"
+                     android:layout_gravity="center|top"
+                     android:textSize="18sp"
+                     android:textColor="@color/black"
+                     />
 
                     <com.patrykandpatrick.vico.views.chart.ChartView
                         android:id="@+id/chart_view"
@@ -135,6 +144,7 @@
                         app:horizontalLayout="fullWidth"
                         app:endContentPadding="16dp"
                         app:startContentPadding="16dp"
+                        android:layout_marginTop="30dp"
                         app:showBottomAxis="true"
                         app:showStartAxis="true" />
 

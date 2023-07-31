@@ -2,159 +2,47 @@ package com.yusuforhan.budgetmanager.android.ViewModel
 
 import android.app.Application
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.yusuforhan.budgetmanager.android.Database.BudgetDao
 import com.yusuforhan.budgetmanager.android.Database.BudgetDataBase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
-class DashBoardViewModel(application: Application,) : BaseViewModel(application) {
-    var totalBalance : MutableLiveData<Int> = MutableLiveData(0)
-    var totalIncome1: MutableLiveData<Int> = MutableLiveData(0)
-    var totalExpense2 : MutableLiveData<Int> = MutableLiveData(0)
-    // var categorees2 = arrayOf("Wage","Allowance","Investment","Freelancer","Other")
-    /*var wage = MutableLiveData<Int>(1)
-    var allowance = MutableLiveData<Int>(1)
-    var investment = MutableLiveData<Int>(1)
-    var freelancer = MutableLiveData<Int>(1)
-    var otherIncome = MutableLiveData<Int>(1)
-    var foodShopping : MutableLiveData<Int> = MutableLiveData(1)
-    var groceryShooping : MutableLiveData<Int> = MutableLiveData(1)
-    var clothesShooping : MutableLiveData<Int> = MutableLiveData(1)
-    var hoseRent : MutableLiveData<Int> = MutableLiveData(1)
-    var otherExpense : MutableLiveData<Int> = MutableLiveData()
-    var expenseCategoryMap = HashMap<String,Int>()
-    var incomeCategoryMap = HashMap<String,Int>()
-    val hashMap : MutableLiveData<HashMap<String,Int>> = MutableLiveData()
-    var control = MutableLiveData<Boolean>(false)
+class DashBoardViewModel(private val budgetDao : BudgetDao) : ViewModel() {
+    var totalBalance: MutableLiveData<Int> = MutableLiveData(0)
+    var totalIncome: MutableLiveData<Int> = MutableLiveData(0)
+    var totalExpense: MutableLiveData<Int> = MutableLiveData(0)
+    val hashMap = MutableLiveData<HashMap<String,Int>>(hashMapOf())
+    val incomeHashMap : LiveData<HashMap<String,Int>>
+        get() = hashMap
+    fun getTotalBalance() = viewModelScope.launch {
+        var totalI: Int = 0
+        var totalE: Int = 0
 
-     */
-    fun getTotalBalance() {
-        var totalIncome : Int = 0
-        var totalExpense : Int = 0
-        launch{
-            BudgetDataBase(getApplication()).budgetDao().getAllIncome()?.forEach { budgets ->
-               totalIncome += budgets.amount
-            }
-            BudgetDataBase(getApplication()).budgetDao().getAllExpense()?.forEach { budgets ->
-                totalExpense += budgets.amount
-            }
-            totalIncome1.value = totalIncome
-            totalExpense2.value = totalExpense
-            println("Income : ${totalIncome1.value}")
-            println("Expense : ${totalExpense2.value}")
-            totalBalance.value = totalIncome - totalExpense
+        budgetDao.getAllIncome().forEach { budgets ->
+            totalI += budgets.amount
+        }
+        budgetDao.getAllExpense().forEach { budgets ->
+            totalE += budgets.amount
         }
 
+        totalIncome.postValue(totalI)
+        totalExpense.postValue(totalE)
+        println("Income : ${totalIncome.value}")
+        println("Expense : ${totalExpense.value}")
+        totalBalance.value = totalE - totalI
 
     }
-  /*  fun getCategorySize(){
-        launch {
-            println("Launch Bloğu Başladı")
-            BudgetDataBase(getApplication()).budgetDao().getAllExpense().forEach { budgets ->
-                when (budgets.category) {
-                    "Food Shopping" -> {
-                        val i: Int = foodShopping.value?.plus(1)!!
-                        addExpenseHashMap("Food Shopping",i)
-                    }
 
-                    "Grocery Shopping" -> {
-                        groceryShooping.value = groceryShooping.value?.plus(1)
-                        addExpenseHashMap("Grocery Shopping",groceryShooping.value)
-                    }
-
-                    "Clothes Shopping" -> {
-                        clothesShooping.value = clothesShooping.value?.plus(1)
-                        addExpenseHashMap("Clothes Shopping",clothesShooping.value)
-
-                    }
-
-                    "House Rent" -> {
-                        hoseRent.value = hoseRent.value?.plus(1)
-                        addExpenseHashMap("House Rent",hoseRent.value)
-                    }
-
-                    "Other" -> {
-                        otherExpense.value = otherExpense.value?.plus(1)
-                        addExpenseHashMap("Other",otherExpense.value)
-                    }
-                }
-            }
-            BudgetDataBase(getApplication()).budgetDao().getAllIncome().forEach{budgets ->
-                when (budgets.category) {
-                    "Wage" -> {
-                        wage.value = wage.value?.plus(1)
-                        addIncomeHashMap("Wage",wage.value)
-                    }
-
-                    "Allowance" -> {
-                        allowance.value = allowance.value?.plus(1)
-                        addIncomeHashMap("Allowance",allowance.value)
-                    }
-
-                    "Investment" -> {
-                        investment.value = investment.value?.plus(1)
-                        addIncomeHashMap("Investment",investment.value)
-
-                    }
-
-                    "Freelancer" -> {
-                        freelancer.value = freelancer.value?.plus(1)
-                        addIncomeHashMap("Freelancer",freelancer.value)
-                    }
-
-                    "Other" -> {
-                        otherIncome.value = otherIncome.value?.plus(1)
-                        addIncomeHashMap("Other",otherIncome.value)
-                    }
-                }
-            }
-
-            println("Launch Bloğu Bitti")
-            control.value = true
+    fun getIncomeAnalytics() = viewModelScope.launch(Dispatchers.IO){
+        budgetDao.getAllIncome().forEach {
+            hashMap.value?.put(it.category,it.amount)
+            println("HashMap Value : ${hashMap.value?.get(it.category)}")
         }
     }
-    fun addExpenseHashMap(name : String, value : Int?){
-        if (value != null){
-            expenseCategoryMap.put(name,value)
-        }else{
-            expenseCategoryMap.put(name,1)
-        }
-    }
-    fun addIncomeHashMap(name : String,value: Int?){
-        if (value != null){
-            incomeCategoryMap.put(name,value)
-        }else{
-            incomeCategoryMap.put(name,1)
-        }
-    }
-    fun test() : HashMap<String,Int>{
-        val map = hashMapOf<String,Int>()
-        var totalWage = Any()
-        var totalAlloWance = Any()
-        var totalInvestment = Any()
-        var totalFreelancer = Any()
-        var totalOther = Any()
-        incomeCategoryMap.forEach {name ,value ->
-            if (name == "Wage"){
-                totalWage =  value.toInt()
-            }else if (name == "Allowance"){
-                totalAlloWance = value.toInt()
-            }else if (name == "Investment"){
-                totalInvestment = value.toInt()
-            }else if (name == "Freelancer") {
-                totalFreelancer = value.toInt()
-            }else if (name == "Other"){
-                totalOther = value.toInt()
-            }
-        }
-        map.put("Wage",totalWage.toString().toInt())
-        map.put("Allowance",totalAlloWance.toString().toInt())
-        map.put("Investment",totalInvestment.toString().toInt())
-        map.put("Freelancer",totalFreelancer.toString().toInt())
-        map.put("Other",totalOther.toString().toInt())
-        return map
-    }
-
-   */
 }
