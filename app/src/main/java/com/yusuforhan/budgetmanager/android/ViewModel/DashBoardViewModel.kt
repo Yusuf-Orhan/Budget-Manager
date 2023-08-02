@@ -17,9 +17,6 @@ class DashBoardViewModel(private val budgetDao : BudgetDao) : ViewModel() {
     var totalBalance: MutableLiveData<Int> = MutableLiveData(0)
     var totalIncome: MutableLiveData<Int> = MutableLiveData(0)
     var totalExpense: MutableLiveData<Int> = MutableLiveData(0)
-    val hashMap = MutableLiveData<HashMap<String,Int>>(hashMapOf())
-    val incomeHashMap : LiveData<HashMap<String,Int>>
-        get() = hashMap
     fun getTotalBalance() = viewModelScope.launch {
         var totalI: Int = 0
         var totalE: Int = 0
@@ -39,10 +36,4 @@ class DashBoardViewModel(private val budgetDao : BudgetDao) : ViewModel() {
 
     }
 
-    fun getIncomeAnalytics() = viewModelScope.launch(Dispatchers.IO){
-        budgetDao.getAllIncome().forEach {
-            hashMap.value?.put(it.category,it.amount)
-            println("HashMap Value : ${hashMap.value?.get(it.category)}")
-        }
-    }
 }

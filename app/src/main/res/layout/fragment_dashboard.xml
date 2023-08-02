@@ -37,7 +37,8 @@
                     app:cardBackgroundColor="#FFFBFF"
                     app:cardCornerRadius="5dp"
                     app:cardElevation="5dp"
-                    app:layout_constraintBottom_toTopOf="@id/barchartCard"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cardViewMain">
@@ -108,46 +109,6 @@
                             app:layout_constraintStart_toEndOf="@+id/imageView2"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-
-             <androidx.cardview.widget.CardView
-                    android:id="@+id/barchartCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    app:cardBackgroundColor="#FFFBFF"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pieChartCard">
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="Income Analytics"
-                     android:layout_marginTop="5dp"
-                     android:layout_gravity="center|top"
-                     android:textSize="18sp"
-                     android:textColor="@color/black"
-                     />
-
-                    <com.patrykandpatrick.vico.views.chart.ChartView
-                        android:id="@+id/chart_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:chart="column"
-                        app:columnChartStyle="@style/Chart2ColumnChartStyle"
-                        app:horizontalLayout="fullWidth"
-                        app:endContentPadding="16dp"
-                        app:startContentPadding="16dp"
-                        android:layout_marginTop="30dp"
-                        app:showBottomAxis="true"
-                        app:showStartAxis="true" />
-
                 </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

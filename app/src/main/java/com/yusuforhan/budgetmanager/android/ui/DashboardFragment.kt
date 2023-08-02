@@ -38,11 +38,9 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getTotalBalance()
-        viewModel.getIncomeAnalytics()
         observeLiveData()
         pieChart()
         val chartEntryModel  = entryModelOf(4f,12f,8f,16f)
-        binding.chartView.setModel(chartEntryModel)
     }
 
     private fun observeLiveData() {
@@ -58,8 +56,6 @@ class DashboardFragment : Fragment() {
         viewModel.totalExpense.observe(viewLifecycleOwner) {
             pieList.add(PieEntry(it.toFloat(), "Expense"))
             binding.pieChart.data = pieData
-        }
-        viewModel.hashMap.observe(viewLifecycleOwner) {
         }
 
     }
