@@ -32,15 +32,16 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    lateinit var customBinding : CustomAlertdialogBinding
-    val categoryType = arrayOf("Income","Expense")
-    var categories = arrayOf("Food Shopping","Grocery Shopping","Clothes Shopping","House Rent","Other")
-    var categorees2 = arrayOf("Wage","Allowance","Investment","Freelancer","Other")
+    lateinit var customBinding: CustomAlertdialogBinding
+    val categoryType = arrayOf("Income", "Expense")
+    var categories =
+        arrayOf("Food Shopping", "Grocery Shopping", "Clothes Shopping", "House Rent", "Other")
+    var categorees2 = arrayOf("Wage", "Allowance", "Investment", "Freelancer", "Other")
     lateinit var adapter: ArrayAdapter<String>
-    lateinit var adapter2 : ArrayAdapter<String>
-    lateinit var adapter3 : ArrayAdapter<String>
+    lateinit var adapter2: ArrayAdapter<String>
+    lateinit var adapter3: ArrayAdapter<String>
     lateinit var alertDialogBuilder: MaterialAlertDialogBuilder
-    lateinit var alertDialog : AlertDialog
+    lateinit var alertDialog: AlertDialog
 
     private val viewModel: MainViewModel by viewModels {
         MainViewModelFactory(
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen().setKeepOnScreenCondition{
+        installSplashScreen().setKeepOnScreenCondition {
             keepSplashOpened
         }
         CoroutineScope(Dispatchers.Main).launch {
@@ -61,24 +62,26 @@ class MainActivity : AppCompatActivity() {
             keepSplashOpened = false
         }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        val navHostFragment : NavHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        val navHostFragment: NavHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         NavigationUI.setupWithNavController(binding.bottomNav, navHostFragment.navController)
         binding.bottomNav.menu.getItem(1).isEnabled = false
 
         saveData()
         NavigationUI.setupWithNavController(binding.navView, navHostFragment.navController)
         val toogle = ActionBarDrawerToggle(this, binding.drawer, binding.toolbar, 0, 0)
-        toogle.drawerArrowDrawable.color= resources.getColor(R.color.white)
+        toogle.drawerArrowDrawable.color = resources.getColor(R.color.white)
         binding.drawer.addDrawerListener(toogle)
 
         toogle.syncState()
-        binding.navView.setNavigationItemSelectedListener{ item->
+        binding.navView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.share -> {
                     Toast.makeText(applicationContext, "Share App", Toast.LENGTH_SHORT).show()
                     shareApp(this@MainActivity)
                     true
                 }
+
                 R.id.rating -> {
                     Toast.makeText(applicationContext, "Rating App", Toast.LENGTH_SHORT).show()
                     startActivity(
@@ -89,26 +92,32 @@ class MainActivity : AppCompatActivity() {
                     )
                     true
                 }
+
                 R.id.deleteAll -> {
-                    Toast.makeText(applicationContext, "Delete All Budget,", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Delete All Budget,", Toast.LENGTH_SHORT)
+                        .show()
                     val alertDialog = MaterialAlertDialogBuilder(this)
                     alertDialog.background = resources.getDrawable(R.color.white)
                     alertDialog.setTitle("Warning")
                     alertDialog.setMessage("Are you sure you want to delete all data?")
                     alertDialog.setPositiveButton("Yes") { dialog, which -> viewModel.deleteAllBudget() }
-                    alertDialog.setNegativeButton("No"
+                    alertDialog.setNegativeButton(
+                        "No"
                     ) { dialog, which -> }.create().show()
 
                     true
                 }
+
                 R.id.about_us -> {
                     true
                 }
-                else ->false
+
+                else -> false
             }
         }
     }
-    fun saveData(){
+
+    fun saveData() {
         customBinding = DataBindingUtil.inflate<CustomAlertdialogBinding>(
             LayoutInflater.from(this),
             R.layout.custom_alertdialog,
@@ -123,7 +132,7 @@ class MainActivity : AppCompatActivity() {
 
         customBinding.autoCompleteTextView2.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
-                when(position){
+                when (position) {
                     0 -> {
                         customBinding.categpryEditText.setText("")
                         customBinding.categpryEditText.setAdapter(adapter3)
@@ -144,9 +153,10 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-    fun saveClick(amount : String,type : String,category : String,title : String){
-        viewModel.saveData(amount,type,category,title)
-        if (viewModel.isEmpty.value != true){
+
+    fun saveClick(amount: String, type: String, category: String, title: String) {
+        viewModel.saveData(amount, type, category, title)
+        if (viewModel.isEmpty.value != true) {
             customBinding.titleText.setText("")
             customBinding.autoCompleteTextView2.setText("")
             customBinding.amountText.setText("")
@@ -154,9 +164,11 @@ class MainActivity : AppCompatActivity() {
             alertDialog.cancel()
         }
     }
-    fun cancelButtonClick() : Unit{
+
+    fun cancelButtonClick(): Unit {
         alertDialog.cancel()
     }
+
     fun observeLiveData() {
         viewModel.isEmpty.let {
             it.observe(this) {
@@ -167,11 +179,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    private fun shareApp(context : Context){
-        val packageName : String = context.packageName
+
+    private fun shareApp(context: Context) {
+        val packageName: String = context.packageName
         val sendIntent = Intent()
         sendIntent.setAction(Intent.ACTION_SEND)
-        sendIntent.putExtra(Intent.EXTRA_TEXT,"Download Now : https://play.google.com/store/apps/details?id=$packageName")
+        sendIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            "Download Now : https://play.google.com/store/apps/details?id=$packageName"
+        )
         sendIntent.setType("text/plain")
         context.startActivity(sendIntent)
     }
