@@ -10,7 +10,7 @@
             type="com.yusuforhan.budgetmanager.android.ui.IncomeFragment" />
         <variable
             name="mainActivity"
-            type="com.yusuforhan.budgetmanager.android.MainActivity" />
+            type="com.yusuforhan.budgetmanager.android.ui.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

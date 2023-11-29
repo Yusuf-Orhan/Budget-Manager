@@ -18,7 +18,7 @@
             android:name=".onboarding.ui.OnBoarding"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.App.Starting">
             <intent-filter>

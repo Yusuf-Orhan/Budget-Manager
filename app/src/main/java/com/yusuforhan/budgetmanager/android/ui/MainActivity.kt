@@ -1,4 +1,4 @@
-package com.yusuforhan.budgetmanager.android
+package com.yusuforhan.budgetmanager.android.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -19,11 +19,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.yusuforhan.budgetmanager.android.BudgetManagerApplication
+import com.yusuforhan.budgetmanager.android.R
 import com.yusuforhan.budgetmanager.android.ViewModel.MainViewModel
 import com.yusuforhan.budgetmanager.android.ViewModel.MainViewModelFactory
 import com.yusuforhan.budgetmanager.android.databinding.ActivityMainBinding
 import com.yusuforhan.budgetmanager.android.databinding.CustomAlertdialogBinding
-import com.yusuforhan.budgetmanager.android.onboarding.ui.OnBoarding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -59,14 +60,14 @@ class MainActivity : AppCompatActivity() {
             delay(100)
             keepSplashOpened = false
         }
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-        val navHostFragment : NavHostFragment= supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
-        NavigationUI.setupWithNavController(binding.bottomNav,navHostFragment.navController)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        val navHostFragment : NavHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        NavigationUI.setupWithNavController(binding.bottomNav, navHostFragment.navController)
         binding.bottomNav.menu.getItem(1).isEnabled = false
 
         saveData()
-        NavigationUI.setupWithNavController(binding.navView,navHostFragment.navController)
-        val toogle = ActionBarDrawerToggle(this,binding.drawer,binding.toolbar,0,0)
+        NavigationUI.setupWithNavController(binding.navView, navHostFragment.navController)
+        val toogle = ActionBarDrawerToggle(this, binding.drawer, binding.toolbar, 0, 0)
         toogle.drawerArrowDrawable.color= resources.getColor(R.color.white)
         binding.drawer.addDrawerListener(toogle)
 
@@ -74,17 +75,22 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setNavigationItemSelectedListener{ item->
             when (item.itemId) {
                 R.id.share -> {
-                    Toast.makeText(applicationContext,"Share App",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Share App", Toast.LENGTH_SHORT).show()
                     shareApp(this@MainActivity)
                     true
                 }
                 R.id.rating -> {
-                    Toast.makeText(applicationContext,"Rating App",Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+                    Toast.makeText(applicationContext, "Rating App", Toast.LENGTH_SHORT).show()
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=$packageName")
+                        )
+                    )
                     true
                 }
                 R.id.deleteAll -> {
-                    Toast.makeText(applicationContext,"Delete All Budget,",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Delete All Budget,", Toast.LENGTH_SHORT).show()
                     val alertDialog = MaterialAlertDialogBuilder(this)
                     alertDialog.background = resources.getDrawable(R.color.white)
                     alertDialog.setTitle("Warning")
@@ -96,7 +102,6 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.about_us -> {
-                    startActivity(Intent(this,OnBoarding::class.java))
                     true
                 }
                 else ->false
@@ -104,7 +109,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
     fun saveData(){
-        customBinding = DataBindingUtil.inflate<CustomAlertdialogBinding>(LayoutInflater.from(this),R.layout.custom_alertdialog,null,false)
+        customBinding = DataBindingUtil.inflate<CustomAlertdialogBinding>(
+            LayoutInflater.from(this),
+            R.layout.custom_alertdialog,
+            null,
+            false
+        )
         observeLiveData()
         val listPopupWindow = ListPopupWindow(this)
         adapter = ArrayAdapter(applicationContext, R.layout.spinner_text, categoryType)
